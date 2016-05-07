@@ -1,0 +1,23 @@
+{
+  "name": "proto",
+  "version": "1.0.0",
+  "description": "",
+  "main": "jquery.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.14.2",
+    "express": "^4.13.4",
+    "jade": "^1.11.0",
+    "mongodb": "^2.1.6",
+    "monk": "^1.0.1",
+    "morgan": "^1.6.1",
+    "stylus": "^0.53.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.8.1"
+  }
+}
