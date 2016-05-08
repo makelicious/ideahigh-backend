@@ -3,10 +3,6 @@ var router = express.Router();
 var bodyParser = require('body-parser');
 var parseUrlencoded = bodyParser.urlencoded({ extended: false });
 
-var mongo = require('mongodb');
-var monk = require('monk');
-var db = require('monk')('localhost:27017/proto');
-
 router.route('/signup')
   .get(function (req, res) {
     res.render('signup', {
