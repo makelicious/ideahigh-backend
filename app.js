@@ -3,9 +3,7 @@ var app = express();
 var bodyParser = require('body-parser');
 
 // database settings
-var mongo = require('mongodb');
-var monk = require('monk');
-var db = require('monk')('localhost:27017/proto');
+var db = require('./lib/db');
 // routes
 var thoughts = require('./routes/thoughts');
 var users = require('./routes/users');

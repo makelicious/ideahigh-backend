@@ -3,9 +3,7 @@ var router = express.Router();
 var bodyParser = require('body-parser');
 var parseUrlencoded = bodyParser.urlencoded({ extended: false });
 
-
-
-
+// list of every thoughts
 router.route('/.json/')
   .get(function(req, res) {
     var db = req.db;
@@ -19,20 +17,24 @@ router.route('/.json/')
     var db = req.db;
     var collection = db.get('thoughts');
     collection.insert(req.body, function(err, docs){
-        res.send(docs);
+      res.status(201).send(docs);
     });
   });
 
-    router.route('/thoughtlist.json')
-    .get(function(req, res) {
-      var db = req.db;
-      var collection = db.get('thoughts');
-      collection.distinct("hashtags", function(e, docs) {
-        var allHashtags = docs;
-        allHashtags.sort();
-         res.json(allHashtags);
-      });
+
+
+// list of every hashtags
+router.route('/hashtags.json')
+  .get(function(req, res) {
+    var db = req.db;
+    var collection = db.get('thoughts');
+    collection.distinct("hashtags", function(e, docs) {
+      var allHashtags = docs;
+      allHashtags.sort();
+      res.json(allHashtags);
     });
+  });
+
 router.route('/')
   .get(function(req, res) {
     res.render('hashtaglist', {
@@ -40,7 +42,8 @@ router.route('/')
     });
   });
 
-  router.route('/:hashtags.json')
+// list of every thought under specific hashtag
+router.route('/:hashtags.json')
   .get(function(req, res) {
     var db = req.db;
     var collection = db.get('thoughts');
@@ -51,20 +54,21 @@ router.route('/')
     });
   });
 
-  router.route('/:hashtags')
-    .get(function(req, res) {
-      res.render('thoughts', {
-        title: 'yeah'
+router.route('/:hashtags')
+  .get(function(req, res) {
+    res.render('thoughts', {
+      title: 'yeah'
     });
   });
 
-  router.route('/:hashtags/associatedhashtags.json')
-    .get(function(req, res) {
+// list of associated hashtags of a current hashtag
+router.route('/:hashtags/associatedhashtags.json')
+  .get(function(req, res) {
     var db = req.db;
     var collection = db.get('thoughts');
     var currentHashtagBranch = req.params.hashtags;
     collection.find({"hashtags": currentHashtagBranch}, function(e, docs) {
-      var thoughts = docs;
+       var thoughts = docs;
        var allHashtags = thoughts.map(function(thought) {
         return thought.hashtags;
        });
@@ -80,18 +84,19 @@ router.route('/')
           return hashtag;
         }
        });
-       associatedHashtags.sort();
-       res.json(associatedHashtags);
-      });
+
+      associatedHashtags.sort();
+      res.json(associatedHashtags);
+    });
   });
 
-  router.route('/deletethought/:id')
-    .delete(function(req, res) {
-      var db = req.db;
-      var collection = db.get('thoughts');
-      var userToDelete = req.params.id;
+router.route('/deletethought/:id')
+  .delete(function(req, res) {
+    var db = req.db;
+    var collection = db.get('thoughts');
+    var userToDelete = req.params.id;
       collection.remove({ '_id': userToDelete });
-    });
+  });
 
 
 
