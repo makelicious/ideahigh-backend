@@ -17,12 +17,13 @@ router.route('/')
   collection.insert(req.body, function(err, docs) {
     res.status(201).send(req.body);
   });
-})
-.put(function(req, res) {
+});
+
+router.route('/:thought_id').put(function(req, res) {
   var db = req.db;
   var board = req.params.board;
   var collection = db.get('thoughts-' + board);
-  collection.update({ id: req.body.id }, req.body, function(err, docs) {
+  collection.update({ id: req.params.thought_id }, req.body, function(err, docs) {
     res.status(201).send(req.body);
   });
 });
