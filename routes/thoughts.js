@@ -30,7 +30,7 @@ router.route('/:thought_id')
   collection.update({
     id: parseInt(req.params.thought_id, 10)
   }, newData, function(err, docs) {
-    res.status(201).send(req.body);
+    res.status(200).send(req.body);
   });
 })
 .delete(function(req, res) {
