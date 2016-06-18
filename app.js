@@ -5,7 +5,7 @@ var bodyParser = require('body-parser');
 // database settings
 var mongo = require('mongodb');
 var monk = require('monk');
-var db = require('monk')('localhost:27017/proto');
+var db = require('monk')(process.env.MONGODB_URI || 'localhost:27017/proto');
 // routes
 var thoughts = require('./routes/thoughts');
 var users = require('./routes/users');
@@ -33,8 +33,8 @@ app.get('/', function(req, res) {
     title: 'Chronomonology' });
 });
 
-app.listen(3000, function() {
-  console.log('Listening on port 3000');
+const port = process.env.PORT || 3000;
 
+app.listen(port, function() {
+  console.log('Listening on port', port);
 });
-
