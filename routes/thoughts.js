@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router({mergeParams: true});
+var _ = require('lodash');
 
 router.route('/')
 .get(function(req, res) {
@@ -23,7 +24,11 @@ router.route('/:thought_id').put(function(req, res) {
   var db = req.db;
   var board = req.params.board;
   var collection = db.get('thoughts-' + board);
-  collection.update({ id: req.params.thought_id }, req.body, function(err, docs) {
+  var newData = _.omit(req.body, '_id');
+
+  collection.update({
+    id: parseInt(req.params.thought_id, 10)
+  }, newData, function(err, docs) {
     res.status(201).send(req.body);
   });
 });
