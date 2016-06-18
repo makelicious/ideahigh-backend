@@ -20,7 +20,8 @@ router.route('/')
   });
 });
 
-router.route('/:thought_id').put(function(req, res) {
+router.route('/:thought_id')
+.put(function(req, res) {
   var db = req.db;
   var board = req.params.board;
   var collection = db.get('thoughts-' + board);
@@ -30,6 +31,17 @@ router.route('/:thought_id').put(function(req, res) {
     id: parseInt(req.params.thought_id, 10)
   }, newData, function(err, docs) {
     res.status(201).send(req.body);
+  });
+})
+.delete(function(req, res) {
+  var db = req.db;
+
+  var collection = db.get('thoughts-' + req.params.board);
+
+  collection.remove({
+    id: parseInt(req.params.thought_id, 10)
+  }, function(err, docs) {
+    res.status(200).end();
   });
 });
 
