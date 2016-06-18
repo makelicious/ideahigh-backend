@@ -12,6 +12,7 @@ router.route('/')
 })
 .post(function(req, res) {
   var db = req.db;
+  var board = req.params.board;
   var collection = db.get('thoughts-' + board);
   collection.insert(req.body, function(err, docs) {
     res.status(201).send(req.body);
@@ -19,6 +20,7 @@ router.route('/')
 })
 .put(function(req, res) {
   var db = req.db;
+  var board = req.params.board;
   var collection = db.get('thoughts-' + board);
   collection.update({ id: req.body.id }, req.body, function(err, docs) {
     res.status(201).send(req.body);
