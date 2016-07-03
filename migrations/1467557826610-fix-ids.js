@@ -30,7 +30,7 @@ function updateThoughtIds(collection) {
   });
 }
 
-function getAllThoughts() {
+function updateThoughtCollections() {
 
   return getDatabase().then((database) =>
     database.collections()
@@ -45,7 +45,7 @@ function getAllThoughts() {
 }
 
 exports.up = function(next) {
-  getAllThoughts()
+  updateThoughtCollections()
     .then(() => next())
     .catch(next)
 };
