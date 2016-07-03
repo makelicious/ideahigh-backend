@@ -5,6 +5,7 @@ var _ = require('lodash');
 router.route('/')
 .get(function(req, res) {
   var db = req.db;
+  
   var board = req.params.board;
   var collection = db.collection('thoughts-' + board);
   collection.find({}).toArray(function(err, docs) {
@@ -27,7 +28,7 @@ router.route('/:thought_id').put(function(req, res) {
   var newData = _.omit(req.body, '_id');
 
   collection.update({
-    id: parseInt(req.params.thought_id, 10)
+    id: req.params.thought_id
   }, newData, function(err, docs) {
     res.status(200).send(req.body);
   });
@@ -38,7 +39,7 @@ router.route('/:thought_id').put(function(req, res) {
   var collection = db.collection('thoughts-' + req.params.board);
 
   collection.remove({
-    id: parseInt(req.params.thought_id, 10)
+    id: req.params.thought_id
   }, function(err, docs) {
     res.status(200).end();
   });
