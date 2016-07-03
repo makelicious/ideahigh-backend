@@ -6,25 +6,24 @@ router.route('/')
 .get(function(req, res) {
   var db = req.db;
   var board = req.params.board;
-  var collection = db.get('thoughts-' + board);
-  collection.find({}, {}, function(e, docs) {
+  var collection = db.collection('thoughts-' + board);
+  collection.find({}).toArray(function(err, docs) {
     res.json(docs);
   });
 })
 .post(function(req, res) {
   var db = req.db;
   var board = req.params.board;
-  var collection = db.get('thoughts-' + board);
+  var collection = db.collection('thoughts-' + board);
   collection.insert(req.body, function(err, docs) {
     res.status(201).send(req.body);
   });
 });
 
-router.route('/:thought_id')
-.put(function(req, res) {
+router.route('/:thought_id').put(function(req, res) {
   var db = req.db;
   var board = req.params.board;
-  var collection = db.get('thoughts-' + board);
+  var collection = db.collection('thoughts-' + board);
   var newData = _.omit(req.body, '_id');
 
   collection.update({
@@ -36,7 +35,7 @@ router.route('/:thought_id')
 .delete(function(req, res) {
   var db = req.db;
 
-  var collection = db.get('thoughts-' + req.params.board);
+  var collection = db.collection('thoughts-' + req.params.board);
 
   collection.remove({
     id: parseInt(req.params.thought_id, 10)
