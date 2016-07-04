@@ -4,7 +4,9 @@
   "description": "",
   "main": "jquery.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "migrate": "migrate up",
+    "postinstall": "npm run migrate"
   },
   "author": "",
   "license": "ISC",
@@ -14,8 +16,8 @@
     "express": "^4.13.4",
     "jade": "^1.11.0",
     "lodash": "^4.13.1",
-    "mongodb": "^1.4.0",
-    "monk": "^1.0.1",
+    "migrate": "^0.2.2",
+    "mongodb": "^2.1.18",
     "morgan": "^1.6.1",
     "stylus": "^0.53.0"
   },
