@@ -8,7 +8,7 @@ router.route('/')
   var board = req.params.board;
   var search = req.params.search || '';
   var collection = db.collection('thoughts-' + board);
-  collection.find({ "text": { $regex: search }).toArray(function(err, docs) {
+  collection.find({ "text": { $regex: search }}).toArray(function(err, docs) {
     res.json(docs);
   });
 })
