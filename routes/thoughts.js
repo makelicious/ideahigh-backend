@@ -3,10 +3,17 @@ var router = express.Router({mergeParams: true});
 var _ = require('lodash');
 
 router.route('/')
-.get(function(req, res) {
-  var db = req.db;
-  var board = req.params.board;
-  var collection = db.get('thoughts-' + board);
+  .get(function(req, res) {
+    if(req.params.search !== undefined) {
+      var db = req.db;
+      var board = req.params.board;
+      var search = req.params.search;
+      var collection = db.get('thoughts-' + board);
+      collection.find({ "text": { $regex: search }}, function(e, docs) {
+        res.json(docs);
+      });
+    })
+  }
   collection.find({}, {}, function(e, docs) {
     res.json(docs);
   });
