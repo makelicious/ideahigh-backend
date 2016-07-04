@@ -6,7 +6,7 @@ router.route('/')
 .get(function(req, res) {
   var db = req.db;
   var board = req.params.board;
-  var search = req.params.search || '';
+  var search = req.query.search || '';
   var collection = db.collection('thoughts-' + board);
   collection.find({ "text": { $regex: search }}).toArray(function(err, docs) {
     res.json(docs);
